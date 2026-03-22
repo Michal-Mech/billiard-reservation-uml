@@ -34,7 +34,7 @@ The project was created using **Enterprise Architect 17.1**. To open the source 
 
 ### 1. Package Diagram (`Diagram pakietów`)
 
-![Package Diagram](docs/Diagram pakietów.png)
+![Package Diagram](docs/Diagram_pakietwow.png)
 
 The Package Diagram provides overview of the system's requirements, grouped into three packages:
 
