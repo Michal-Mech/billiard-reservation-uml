@@ -34,7 +34,7 @@ The project was created using **Enterprise Architect 17.1**. To open the source 
 
 ### 1. Package Diagram (`Diagram pakietów`)
 
-![Package Diagram](Diagram_pakietów.png)
+![Package Diagram](docs/Diagram_pakietów.png)
 
 The Package Diagram provides overview of the system's requirements, grouped into three packages:
 
@@ -230,88 +230,3 @@ This Communication Diagram presents the same **online payment** scenario as the 
 
 ---
 
-### 7. State Machine Diagram — Reservation States (`Stany`)
-
-![Stany](Stany.png)
-
-This State Machine Diagram models all possible **states of a reservation** throughout its lifecycle, from creation to archival or refund.
-
-**States:**
-
-| State | Description |
-|---|---|
-| **Nieopłacona** (Unpaid) | Initial state — reservation created but not yet paid |
-| **Płatność rozpoczęta** (Payment started) | Entry: fetches amount to pay; initiates PayU or BLIK payment |
-| **Opłacona** (Paid) | Reached when `Rezerwacja.transaction_id != null` |
-| **Anulowana Nieopłacona** (Cancelled, Unpaid) | Unpaid reservation cancelled by the user |
-| **Anulowana Opłacona** (Cancelled, Paid) | Paid reservation cancelled — triggers refund evaluation |
-| **Odmowa zwrotu** (Refund denied) | Refund denied when `Rezerwacja.Data - Today <= 1 day` |
-| **Przyznano zwrot** (Refund granted) | Entry: fetches refund amount; do: processes refund via PayU; exit: sends refund confirmation email |
-| **Archiwalna** (Archived) | Final state for paid reservations where `Rezerwacja.Data > Today` |
-
-**Key transitions:**
-
-- *Nieopłacona* → *Płatność rozpoczęta*: user clicks "Opłać Rezerwację" (Pay)
-- *Nieopłacona* → *Anulowana Nieopłacona*: user clicks "Anuluj Rezerwację" (Cancel)
-- *Opłacona* → *Anulowana Opłacona*: user cancels a paid reservation
-- *Anulowana Opłacona* → refund decision: based on how close the reservation date is (≤ 1 day → refund denied; else → refund granted)
-- *Opłacona* → *Archiwalna*: reservation date has passed
-
----
-
-### 8. Sequence Diagram — Online Payment (`Opłacanie rezerwacji przez płatność internetową`)
-
-![Opłacanie rezerwacji przez płatność internetową](Opłacanie_rezerwacji_przez_płatność_internetową.png)
-
-This Sequence Diagram illustrates the message flow between system components during the **online payment process** for a reservation.
-
-**Participants:**
-
-- **Klient Zalogowany** — the logged-in user
-- **Widok rezerwacji** — the reservation view (UI layer)
-- **Zarządzanie widokiem** — the view controller / application logic layer
-- **:Rezerwacja** — the reservation object
-- **:Płatność** — the payment object
-- **Serwis płatności** — the payment service
-- **PayU** — the external PayU payment gateway
-
-**Flow:**
-
-1. The view controller fetches the reservation object (`pobierz(int): Rezerwacja`) and displays it to the user (`wyświetl(Rezerwacja)`).
-2. The user triggers online payment (`zapłać_online()`).
-3. The controller calls `wykonaj_płatność()`, then `rozpocznij_płatność(): Płatność`.
-4. The payment service receives `rozpocznij_platnosc(Płatność)` and creates a `:Płatność` object, which processes the payment status (`przetwórz(Status_płatności)`).
-5. PayU is initiated via `rozpocznij_payu()`.
-6. **alt** block — two alternative outcomes:
-   - **[płatność udana]** (payment successful): PayU returns `transakcja_udana()` → controller confirms payment (`potwierdź_płatność()`) → UI displays success (`wyświetl_udaną_płatność()`).
-   - **[else]** (payment failed): PayU returns `płatność_nieudana()` → UI displays failure (`wyświetl_nieudaną_płatność()`).
-
----
-
-### 9. Communication Diagram — Online Payment (`Opłacanie rezerwacji przez płatność internetową Communication`)
-
-![Opłacanie rezerwacji przez płatność internetową Communication](Opłacanie_rezerwacji_przez_płatność_internetową_Communication.png)
-
-This Communication Diagram presents the same **online payment scenario** as the Sequence Diagram above, but emphasises the structural relationships and numbered message order between objects rather than the timeline.
-
-**Participants:** Klient Zalogowany, Widok rezerwacji, Zarządzanie widokiem, :Rezerwacja, :Płatność, Serwis płatności, PayU.
-
-**Numbered message sequence:**
-
-| # | Message | Description |
-|---|---|---|
-| 1 | `pobierz(int): Rezerwacja` | Fetch reservation from data source |
-| 1.1 | `wyświetl(Rezerwacja)` | Display reservation in the view |
-| 2 | `zapłać_online()` | User triggers online payment |
-| 2.1 | `wykonaj_płatność()` | Controller initiates payment execution |
-| 2.1.1 | `rozpocznij_płatność(): Płatność` | Payment object created |
-| 2.1.2 | `rozpocznij_platnosc(Płatność)` | Payment service starts processing |
-| 2.1.2.1 | `przetwórz(Status_płatności)` | Payment object processes status |
-| 2.1.2.2 | `rozpocznij_payu()` «create» | PayU session created |
-| 2.1.2.2.1 | `[płatność udana]: transakcja_udana()` | PayU confirms successful transaction |
-| 2.1.2.2.2 | `[else]: płatność_nieudana()` | PayU reports failed transaction |
-| 2.1.3 | `[płatność udana]: potwierdź_płatność()` | Controller confirms payment in the system |
-| 2.1.4 | `[płatność udana]: wyświetl_udaną_płatność()` | Success displayed to user |
-| 2.1.2.3 | `[else]: wyświetl_nieudaną_płatność()` | Failure displayed to user |
-
----
