@@ -48,7 +48,7 @@ The Package Diagram provides overview of the system's requirements, grouped into
 
 ### 2. Requirements Tree — System Rezerwacji (`custom System Rezerwacji`)
 
-![System Rezerwacji](custom_System_Rezerwacji.png)
+![System Rezerwacji](docs/custom_System_Rezerwacji.png)
 
 This custom requirements tree diagram breaks down the top-level requirement **"Możliwa rezerwacja stołów do bilarda"** (Billiard table reservation is possible) into its constituent functional requirements. The tree shows hierarchical relationships and dependencies between features:
 
@@ -69,7 +69,7 @@ Colour coding on the diagram indicates requirement status or priority (green = c
 
 ### 3. Requirements — Wymagania Pozafunkcjonalne (`custom Wymagania pozafunkcjonalne`)
 
-![Wymagania Pozafunkcjonalne](custom_Wymagania_pozafunkcjonalne.png)
+![Wymagania Pozafunkcjonalne](docs/custom_Wymagania_pozafunkcjonalne.png)
 
 This diagram presents the three **non-functional requirements** of the system, each described with metadata tags:
 
@@ -85,7 +85,7 @@ All three non-functional requirements are internal (not directly exposed to end 
 
 ### 4. Requirements Tree — Zarządzanie Systemem (`custom Zarządzanie Systemem`)
 
-![Zarządzanie Systemem](custom_Zarządzanie_Systemem.png)
+![Zarządzanie Systemem](docs/custom_Zarzadzanie_Systemem.png)
 
 This custom requirements tree diagram expands the **"Zarządzanie Systemem"** (System Management) package into its sub-requirements, showing how the top-level administrative feature is decomposed:
 
@@ -104,7 +104,7 @@ Colour coding follows the same convention as the System Rezerwacji diagram, indi
 
 ### 5. Use Case Diagram (`Basic Use Case Model`)
 
-![Basic Use Case Model](Basic_Use_Case_Model.png)
+![Basic Use Case Model](docs/Basic_Use_Case_Model.png)
 
 The Use Case Diagram illustrates the interactions between the system's actors and its core functionalities. The central use case is **"Rezerwowanie stołu do bilardu"** (Reserving a billiard table), highlighted in yellow as the primary system goal.
 
@@ -126,7 +126,7 @@ The Use Case Diagram illustrates the interactions between the system's actors an
 
 ### 6. Activity Diagram — Reservation Cancellation (`Anulowanie rezerwacji_ActivityGraph`)
 
-![Anulowanie rezerwacji ActivityGraph](1763840015287_Anulowanie_rezerwacji_ActivityGraph.png)
+![Anulowanie rezerwacji ActivityGraph](docs/Anulowanie_rezerwacji_ActivityGraph.png)
 
 This Activity Diagram describes the full step-by-step flow of **cancelling a reservation** from the user's perspective, including database interactions and refund logic.
 
@@ -162,7 +162,7 @@ This Activity Diagram describes the full step-by-step flow of **cancelling a res
 
 ### 7. State Machine Diagram — Reservation States (`Stany`)
 
-![Stany](Stany.png)
+![Stany](docs/Stany.png)
 
 The State Machine Diagram models all possible **states of a reservation** throughout its lifecycle, along with the transitions between them.
 
@@ -183,7 +183,7 @@ The State Machine Diagram models all possible **states of a reservation** throug
 
 ### 8. Sequence Diagram — Online Payment (`Opłacanie rezerwacji przez płatność internetową`)
 
-![Opłacanie rezerwacji przez płatność internetową](Opłacanie_rezerwacji_przez_płatność_internetową.png)
+![Opłacanie rezerwacji przez płatność internetową](docs/Oplacanie_rezerwacji_przez_platnosc_internetowa.png)
 
 This Sequence Diagram illustrates the message flow between system components when a logged-in user pays for a reservation **online**.
 
@@ -206,7 +206,7 @@ This Sequence Diagram illustrates the message flow between system components whe
 
 ### 9. Communication Diagram — Online Payment (`Opłacanie rezerwacji przez płatność internetową Communication`)
 
-![Opłacanie rezerwacji przez płatność internetową Communication](Opłacanie_rezerwacji_przez_płatność_internetową_Communication.png)
+![Opłacanie rezerwacji przez płatność internetową Communication](docs/Oplacanie_rezerwacji_przez_platnosc_internetowa_Communication.png)
 
 This Communication Diagram presents the same **online payment** scenario as the Sequence Diagram above, but focuses on the relationships and numbered message flow between objects rather than the timeline.
 
